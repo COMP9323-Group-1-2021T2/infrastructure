@@ -16,16 +16,20 @@ variable "aws_region" {
 }
 
 variable "instance_ami" {
-  default = "ami-09e67e426f25ce0d7"
-  description = "Ubuntu Server 20.04 LTS"
+  default = "ami-0567f647e75c7bc05"
+  description = "Ubuntu Server 20.04 LTS 64-bit x86"
 }
 
 variable "instance_type" {
-  default = "t2.micro"
+  default = "t2.nano"
 }
 
 variable "key_path" {
   default = "keys/mykeypair.pub"
+}
+
+variable "enable_bastion" {
+  default = false
 }
 
 locals {
