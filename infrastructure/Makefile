@@ -2,6 +2,14 @@ init-workspaces:
 	terraform workspace new staging
 	terraform workspace new production
 
+init-staging:
+	terraform workspace select staging
+	terraform init
+
+init-production:
+	terraform workspace select production
+	terraform init
+
 plan-staging:
 	terraform workspace select staging
 	terraform plan -var-file="staging.tfvars"

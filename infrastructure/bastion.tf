@@ -21,7 +21,7 @@ resource "aws_security_group" "allow-ssh" {
 }
 
 resource "aws_instance" "bastion-instance" {
-  count = var.enable_bastion ? 1 : 0
+  count         = var.enable_bastion ? 1 : 0
   ami           = var.instance_ami
   instance_type = var.instance_type
 
@@ -35,11 +35,11 @@ resource "aws_instance" "bastion-instance" {
 }
 
 resource "aws_instance" "private-instance" {
-  count = var.enable_bastion ? 1 : 0
+  count         = var.enable_bastion ? 1 : 0
   ami           = var.instance_ami
   instance_type = var.instance_type
 
-  subnet_id              = aws_subnet.private-subnet-1.id
+  subnet_id = aws_subnet.private-subnet-1.id
   vpc_security_group_ids = [
     aws_security_group.allow-ssh.id,
     aws_vpc.vpc.default_security_group_id,
