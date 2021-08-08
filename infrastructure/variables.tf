@@ -1,3 +1,4 @@
+# These are the different configurable variables we currently support
 variable "environment" {
   type        = string
   default     = "staging"

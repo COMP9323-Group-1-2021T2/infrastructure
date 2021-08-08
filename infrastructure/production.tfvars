@@ -1,3 +1,4 @@
+# This file includes all of our production environment custom configuration
 environment  = "production"
 service_name = "comp9323"
 aws_profile  = "comp9323"

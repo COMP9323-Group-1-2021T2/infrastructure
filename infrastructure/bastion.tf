@@ -1,3 +1,4 @@
+# This Security Group allows SSH access to resources within VPC
 resource "aws_security_group" "allow-ssh" {
   vpc_id      = aws_vpc.vpc.id
   name        = "${local.service_name_env}-allow-ssh"
@@ -20,6 +21,7 @@ resource "aws_security_group" "allow-ssh" {
   }
 }
 
+# Bastion ec2 instance is the public ec2 instance where we can connect to given an AWS keypair
 resource "aws_instance" "bastion-instance" {
   count         = var.enable_bastion ? 1 : 0
   ami           = var.instance_ami
@@ -34,6 +36,8 @@ resource "aws_instance" "bastion-instance" {
   }
 }
 
+# Private ec2 instance is an instance where our bastion server connects to.
+# Private ec2 instance is within the VPC so it can access all resources within the VPC.
 resource "aws_instance" "private-instance" {
   count         = var.enable_bastion ? 1 : 0
   ami           = var.instance_ami
@@ -52,6 +56,7 @@ resource "aws_instance" "private-instance" {
   }
 }
 
+# This is the keypair which we use to connect to our bastion server
 resource "aws_key_pair" "mykeypair" {
   key_name   = "${local.service_name_env}-keypair"
   public_key = file(var.key_path)

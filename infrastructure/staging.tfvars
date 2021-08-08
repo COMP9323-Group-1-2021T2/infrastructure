@@ -1,3 +1,4 @@
+# This file includes all of our staging environment custom configuration
 environment  = "staging"
 service_name = "comp9323"
 aws_profile  = "comp9323"

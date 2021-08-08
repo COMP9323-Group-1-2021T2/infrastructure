@@ -1,3 +1,4 @@
+// This is the general terraform configuration including AWS profile used, dynamodb table, and AWS region
 terraform {
   required_providers {
     aws = {

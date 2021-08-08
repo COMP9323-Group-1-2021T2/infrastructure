@@ -1,8 +1,10 @@
+# Generates a random string for our postgres password
 resource "random_string" "postgres_password" {
   length  = 30
   special = false
 }
 
+# This is the subnet group of our postgres instance
 resource "aws_db_subnet_group" "postgres_subnet_group" {
   name       = "${var.service_name}-${var.environment}-db-subnet-group"
   subnet_ids = [aws_subnet.private-subnet-1.id, aws_subnet.private-subnet-2.id]
@@ -22,7 +24,7 @@ resource "aws_rds_cluster" "postgres-sls-cluster" {
     auto_pause               = true
     max_capacity             = 2
     min_capacity             = 2
-    seconds_until_auto_pause = 300
+    seconds_until_auto_pause = 3600
     timeout_action           = "ForceApplyCapacityChange"
   }
 
@@ -30,6 +32,8 @@ resource "aws_rds_cluster" "postgres-sls-cluster" {
   vpc_security_group_ids = [aws_vpc.vpc.default_security_group_id]
 }
 
+# This is the SSM Parameter which outputs the connection url for our postgres database
+# This includes the host, username, password and the name of the rds database
 resource "aws_ssm_parameter" "postgres_db_conn_url_ssm" {
   name  = "/${var.service_name}/${var.environment}/DB_CONN_URL"
   type  = "SecureString"

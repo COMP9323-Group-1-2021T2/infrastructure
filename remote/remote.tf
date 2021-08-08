@@ -1,3 +1,4 @@
+# This is the provider version we're using for this deployment
 terraform {
   required_providers {
     aws = {
@@ -7,11 +8,13 @@ terraform {
   }
 }
 
+# This is the aws profile and aws region we're using for this deployment
 provider "aws" {
   profile = "comp9323"
   region  = "ap-southeast-2"
 }
 
+# This is where we store our shared terraform state
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "comp9323-terraform-up-and-running-state"
   # Enable versioning so we can see the full revision history of our
@@ -29,6 +32,7 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
+# This is where we store our shared terraform lock
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "comp9323-terraform-up-and-running-locks"
   billing_mode = "PAY_PER_REQUEST"
